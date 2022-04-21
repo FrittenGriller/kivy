@@ -15,102 +15,269 @@ from kivy.uix.popup import Popup
 from random import randint, random, choice
 
 #kv = Builder.load_file("Spiel.kv")
+
 kvtext= """ 
 <MainWindow>:
     name: "main"
+    #BoxLayout:
     FloatLayout:
         size: root.width, root.height
         orientation: 'vertical'
 
         Button:
             text: "Spielen"
-            on_release: root.Spiel_start()
+            on_release: root.Screenwechel_1()
             #on_release: root.open_popup_spiel()
             pos_hint: {"x": 0.4,"y": 0.}
             size_hint: (0.2,0.2)
-            font_size: self.width/5
 
 
         BoxLayout
             orientation: 'vertical'
             pos_hint: {"x": 0.4,"y": 0.6}
-            size_hint: (0.2,0.4)
+            size_hint: (0.2,0.2)
             id: Box_main_spieler_name
 
             Label: #Spieler
                 id: Label_main_spieler
                 text:"Spieler"
-                font_size: self.width/5
                 #size_hint: (0.2,0.1)
                 color: 1, 1, 0, 1
 
-        #BoxLayout:
-        #    orientation: 'vertical'
-        #    id: Box_main_spieler
-        #    pos_hint: {"x": 0.8,"y": 0}
-        #    size_hint: (0.2,0.2)
-
-        ##Spieler eintragen
-        Button:
-            text:"hinzufügen"
-            pos_hint: {"x": 0.8,"y": 0.6}
+        BoxLayout:
+            orientation: 'vertical'
+            id: Box_main_spieler
+            pos_hint: {"x": 0.8,"y": 0}
             size_hint: (0.2,0.2)
-            font_size: self.width/8
-            #on_release: root.Spieler_hinzu()
-            on_release: root.open_Spieler_hinzu()
 
-        #TextInput:
-        #    id: input_box_main
-        #    multiline:False
-        #    font_size: self.width/8
-        #    pos_hint: {"x": 0.8,"y": 0.5}
-        #    size_hint: (0.2,0.2)
-        ##
+        Button: #Spieler eintragen
+            text:"hinzufügen"
+            pos_hint: {"x": 0.8,"y": 0.3}
+            size_hint: (0.2,0.2)
+            on_release: root.Spieler_hinzu()
+
+        TextInput:
+            id: input_box_main
+            multiline:False
+            pos_hint: {"x": 0.8,"y": 0.5}
+            size_hint: (0.2,0.2)
+
+
+
 
         #######
         Button: #einstellungen
             text:"Einstellung"
             pos_hint: {"x": 0.9,"y": 0.9}
             size_hint: (0.1,0.1)
-            font_size: self.width/8
             on_release: root.open_popup_spiel()
 
-<Spielerhizu>
-    auto_dismiss: False
-    title: "Einstellungen"
-    size_hint: 0.6, 0.4
-    pos_hint: {"x": 0.2, "top":0.9}
-    BoxLayout:
+
+<Spielx01>:
+    name: "spielx01"
+    FloatLayout:
+        size: root.width, root.height
         orientation: 'vertical'
+
+        Label:
+            text: "501 double out"
+            pos_hint: {"x": 0.1,"y": 0.9}
+            size_hint: (0.1,0.1)
+
+        ########
+        Button: #einstellungen
+            text:"Einstellung"
+            pos_hint: {"x": 0.9,"y": 0.9}
+            size_hint: (0.1,0.1)
+            on_release: root.open_popup_spiel()
+
+
+        #######Button für die geworfenen Zahlen
         BoxLayout:
-            Label:
-                text:"Spielername eingeben"
-                font_size: self.width/12
-                size_hint: (0.8,1)
+            size_hint: 0.4, 0.4
+            pos_hint: {"x": 0.6,"y": 0.3}
+            orientation: 'vertical'
 
-            Button:
-                text: "close"
-                size_hint: (0.2,1)
-                font_size: self.width/8
-                on_release:
-                    root.dismiss()
+            #reihe1
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    id: Button1
+                    text: "1"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button1.text)
+                Button:
+                    id: Button2
+                    text: "2"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button2.text)
+                Button:
+                    id: Button3
+                    text: "3"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button3.text)#
+                Button:
+                    id: Button4
+                    text: "4"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button4.text)
+                Button:
+                    id: Button5
+                    text: "5"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button5.text)
 
-        TextInput:
-            id: input_box_main
-            multiline:False
-            #font_size: self.width/8
-            #pos_hint: {"x": 0.8,"y": 0.5}
-            #size_hint: (0.2,0.2)
+            #reihe 2
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    id: Button6
+                    text: "6"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button6.text)
+                Button:
+                    id: Button7
+                    text: "7"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button7.text)
+                Button:
+                    id: Button8
+                    text: "8"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button8.text)#
+                Button:
+                    id: Button9
+                    text: "9"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button9.text)
+                Button:
+                    id: Button10
+                    text: "10"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button10.text)
 
-        Button:
-            text: "hinzufügen"
-            #size_hint: (0.2,0.2)
-            font_size: self.width/10
-            on_release:
-                root.hinzufugen()
-            on_release:
-                root.dismiss()
+            #reihe 3
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    id: Button11
+                    text: "11"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button11.text)
+                Button:
+                    id: Button12
+                    text: "12"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button12.text)
+                Button:
+                    id: Button13
+                    text: "13"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button13.text)#
+                Button:
+                    id: Button14
+                    text: "14"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button14.text)
+                Button:
+                    id: Button15
+                    text: "15"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button15.text)
 
+            #reihe 4
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    id: Button16
+                    text: "16"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button16.text)
+                Button:
+                    id: Button17
+                    text: "17"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button17.text)
+                Button:
+                    id: Button18
+                    text: "18"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button18.text)#
+                Button:
+                    id: Button19
+                    text: "19"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button19.text)
+                Button:
+                    id: Button20
+                    text: "20"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button20.text)
+
+            #reihe 5
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Button:
+                    id: Button25
+                    text: "25"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button25.text)
+
+                Button:
+                    id: Button501
+                    text: "501"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Dart(Button501.text)
+                Button:
+                    id: Buttondoppel
+                    text: "doppel"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Button_doppel()
+                Button:
+                    id: Buttondreifach
+                    text: "dreifach"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Button_dreifach()
+                Button:
+                    #id: Button
+                    text: "Zurück"
+                    #pos_hint: {"x": 0.1,"y": 0.8}
+                    #size_hint: (0.1,0.1)
+                    on_release: root.Button_zuruck()
+
+
+
+        #Spielerscore Anzeige
+        BoxLayout:
+            id:Spieler_anzeige
+            size_hint: 0.3, 0.6
+            pos_hint: {"x": 0.,"y": 0.3}
+            orientation: 'vertical'
 
 
 
@@ -122,103 +289,16 @@ kvtext= """
     BoxLayout:
         Button:
             text: "close"
-            font_size: self.width/8
             on_release:
                 root.dismiss()
 
         Button:
             text: "Neustart"
-            font_size: self.width/8
             on_release:
                 root.Spielen()
-
-
-
-<Zwischen_Karte>:
-    name: "Zwischen_Karte"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        Button:
-            text: "Weiter"
-            on_release: root.weiter()
-            on_release: root.Spielaufbau()
-            pos_hint: {"x": 0.4,"y": 0.}
-            size_hint: (0.2,0.2)
-            font_size: self.width/8
-
-        Label:
-            id: Zwischen
-            text:"Viel Spaß das muss ein ganz langer text sein der keinen inhalt hat, \n ermus noch länger sein damit ich sehe wie das funktioniert und ob es geht"
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.8}
-            font_size: self.width/8
-            #color: 1, 1, 0, 1
-
-
-<Spiel_typ01>:
-    name: "Spiel_typ01"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        Button:
-            text: "test"
-            on_release: root.test()
-            pos_hint: {"x": 0.4,"y": 0.}
-            size_hint: (0.2,0.2)
-            font_size: self.width/8
-
-        Label:
-            id: Aufgabe_name
-            text:"Aufgabe"
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.8}
-            #color: 1, 1, 0, 1
-            font_size: self.width/8
-
-        Label:
-            id: Aufgabe_text
-            text:"Spieler ... mache das und das, sonst trinke zwei schlücke"
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.6}
-            #color: 1, 1, 0, 1
-            font_size: self.width/8
-        Label:
-            id: Spieler_name
-            text:""
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.7}
-            #color: 1, 1, 0, 1
-            font_size: self.width/8
-
-
-<Spiel_beenden>:
-    name: "Spiel_beenden"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        Button:
-            text: "Neustart"
-            on_release: root.neustart()
-            pos_hint: {"x": 0.4,"y": 0.}
-            size_hint: (0.2,0.2)
-            font_size: self.width/8
-
-        Label:
-            id: Spiel_ende
-            text:"Spiel beendet"
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.8}
-            #color: 1, 1, 0, 1
-            font_size: self.width/8
-
-
 """
-kv = Builder.load_string(kvtext)
 
+kv = Builder.load_string(kvtext)
 #Screens
 class MainWindow(Screen):
     Label_main_spieler = ObjectProperty(None)
@@ -519,6 +599,7 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
     }
     def __init__(self):
         self.Speicher = self.StaticSpeicher.copy()
+
 
 #Ausführen
 class MainApp(App):
