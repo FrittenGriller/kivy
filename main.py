@@ -14,8 +14,210 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.uix.popup import Popup
 from random import randint, random, choice
 
-kv = Builder.load_file("Spiel.kv")
+#kv = Builder.load_file("Spiel.kv")
+kvtext= """ 
+<MainWindow>:
+    name: "main"
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
 
+        Button:
+            text: "Spielen"
+            on_release: root.Spiel_start()
+            #on_release: root.open_popup_spiel()
+            pos_hint: {"x": 0.4,"y": 0.}
+            size_hint: (0.2,0.2)
+            font_size: self.width/5
+
+
+        BoxLayout
+            orientation: 'vertical'
+            pos_hint: {"x": 0.4,"y": 0.6}
+            size_hint: (0.2,0.4)
+            id: Box_main_spieler_name
+
+            Label: #Spieler
+                id: Label_main_spieler
+                text:"Spieler"
+                font_size: self.width/5
+                #size_hint: (0.2,0.1)
+                color: 1, 1, 0, 1
+
+        #BoxLayout:
+        #    orientation: 'vertical'
+        #    id: Box_main_spieler
+        #    pos_hint: {"x": 0.8,"y": 0}
+        #    size_hint: (0.2,0.2)
+
+        ##Spieler eintragen
+        Button:
+            text:"hinzufügen"
+            pos_hint: {"x": 0.8,"y": 0.6}
+            size_hint: (0.2,0.2)
+            font_size: self.width/8
+            #on_release: root.Spieler_hinzu()
+            on_release: root.open_Spieler_hinzu()
+
+        #TextInput:
+        #    id: input_box_main
+        #    multiline:False
+        #    font_size: self.width/8
+        #    pos_hint: {"x": 0.8,"y": 0.5}
+        #    size_hint: (0.2,0.2)
+        ##
+
+        #######
+        Button: #einstellungen
+            text:"Einstellung"
+            pos_hint: {"x": 0.9,"y": 0.9}
+            size_hint: (0.1,0.1)
+            font_size: self.width/8
+            on_release: root.open_popup_spiel()
+
+<Spielerhizu>
+    auto_dismiss: False
+    title: "Einstellungen"
+    size_hint: 0.6, 0.4
+    pos_hint: {"x": 0.2, "top":0.9}
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            Label:
+                text:"Spielername eingeben"
+                font_size: self.width/12
+                size_hint: (0.8,1)
+
+            Button:
+                text: "close"
+                size_hint: (0.2,1)
+                font_size: self.width/8
+                on_release:
+                    root.dismiss()
+
+        TextInput:
+            id: input_box_main
+            multiline:False
+            #font_size: self.width/8
+            #pos_hint: {"x": 0.8,"y": 0.5}
+            #size_hint: (0.2,0.2)
+
+        Button:
+            text: "hinzufügen"
+            #size_hint: (0.2,0.2)
+            font_size: self.width/10
+            on_release:
+                root.hinzufugen()
+            on_release:
+                root.dismiss()
+
+
+
+
+<popupspiel>
+    auto_dismiss: False
+    title: "Einstellungen"
+    size_hint: 0.6, 0.2
+    pos_hint: {"x": 0.2, "top":0.9}
+    BoxLayout:
+        Button:
+            text: "close"
+            font_size: self.width/8
+            on_release:
+                root.dismiss()
+
+        Button:
+            text: "Neustart"
+            font_size: self.width/8
+            on_release:
+                root.Spielen()
+
+
+
+<Zwischen_Karte>:
+    name: "Zwischen_Karte"
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        Button:
+            text: "Weiter"
+            on_release: root.weiter()
+            on_release: root.Spielaufbau()
+            pos_hint: {"x": 0.4,"y": 0.}
+            size_hint: (0.2,0.2)
+            font_size: self.width/8
+
+        Label:
+            id: Zwischen
+            text:"Viel Spaß das muss ein ganz langer text sein der keinen inhalt hat, \n ermus noch länger sein damit ich sehe wie das funktioniert und ob es geht"
+            size_hint: (0.2,0.1)
+            pos_hint: {"x": 0.4,"y": 0.8}
+            font_size: self.width/8
+            #color: 1, 1, 0, 1
+
+
+<Spiel_typ01>:
+    name: "Spiel_typ01"
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        Button:
+            text: "test"
+            on_release: root.test()
+            pos_hint: {"x": 0.4,"y": 0.}
+            size_hint: (0.2,0.2)
+            font_size: self.width/8
+
+        Label:
+            id: Aufgabe_name
+            text:"Aufgabe"
+            size_hint: (0.2,0.1)
+            pos_hint: {"x": 0.4,"y": 0.8}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+
+        Label:
+            id: Aufgabe_text
+            text:"Spieler ... mache das und das, sonst trinke zwei schlücke"
+            size_hint: (0.2,0.1)
+            pos_hint: {"x": 0.4,"y": 0.6}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+        Label:
+            id: Spieler_name
+            text:""
+            size_hint: (0.2,0.1)
+            pos_hint: {"x": 0.4,"y": 0.7}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+
+
+<Spiel_beenden>:
+    name: "Spiel_beenden"
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        Button:
+            text: "Neustart"
+            on_release: root.neustart()
+            pos_hint: {"x": 0.4,"y": 0.}
+            size_hint: (0.2,0.2)
+            font_size: self.width/8
+
+        Label:
+            id: Spiel_ende
+            text:"Spiel beendet"
+            size_hint: (0.2,0.1)
+            pos_hint: {"x": 0.4,"y": 0.8}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+
+
+"""
+kv = Builder.load_string(kvtext)
 
 #Screens
 class MainWindow(Screen):
