@@ -14,7 +14,6 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.uix.popup import Popup
 from random import randint, random, choice
 from kivy.core.window import Window
-Window.size = (360, 640) #nur für die auflösung jetzt
 
 #kv = Builder.load_file("Spiel.kv")
 kvtext= """ 
