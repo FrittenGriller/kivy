@@ -15,7 +15,9 @@ from kivy.uix.popup import Popup
 from random import randint, random, choice
 from kivy.core.window import Window
 
+
 #kv = Builder.load_file("Spiel.kv")
+
 kvtext= """ 
 <MainWindow>:
     name: "main"
@@ -43,7 +45,7 @@ kvtext= """
                 text:"Spieler"
                 font_size: self.width/5
                 #size_hint: (0.2,0.1)
-                color: 1, 1, 0, 1
+                #color: 1, 1, 0, 1
 
         #BoxLayout:
         #    orientation: 'vertical'
@@ -183,7 +185,7 @@ kvtext= """
             id: Aufgabe_text
             text:"Spieler ... mache das und das, sonst trinke zwei schlücke"
             size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.55}
+            pos_hint: {"x": 0.4,"y": 0.5}
             #color: 1, 1, 0, 1
             font_size: self.width/4
         Label:
@@ -527,37 +529,37 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
         },
         "karte3": {
             "headline": "Investor",
-            "task": "Trinke so viele Schlücke wie du\nmöchtest, du darfst danach die doppelte\nAnzahl verteilen",
-            "frequency": 1
+            "task": "trinke so viele Schlücke wie du\nmöchtest, du darfst danach die doppelte\nAnzahl verteilen",
+            "frequency": 2
         },
         "karte4": {
             "headline": "Schere-Stein-Papier",
-            "task": "Du spielst gegen jeden Mitspieler\nSchere-Stein-Papier, der Verlierer\n trinkt 1 Schluck",
+            "task": "du spielst gegen jeden Mitspieler\nSchere-Stein-Papier, der Verlierer\n trinkt 1 Schluck",
             "frequency": 1
         },
         "karte5": {
             "headline": "kleiner Finger",
-            "task": "Vergleiche die Länge deines kleinen\nFingers mit der Höhe deines Getränks im \nGlas, ist der Finger kürzer, trinke 2 Schlücke",
+            "task": "vergleiche die Länge deines kleinen\nFingers mit der Höhe deines Getränks im \nGlas, ist der Finger kürzer, trinke 2 Schlücke",
             "frequency": 1
         },
         "karte6": {
             "headline": "Krankenhaus",
-            "task": "Pro Krankenhausaufenthalt den du\nhattest, darfst du 1 Schluck verteilen\n(die Geburt zählt nicht, du Pappnase)",
+            "task": "pro Krankenhausaufenthalt den du\nhattest, darfst du 1 Schluck verteilen\n(die Geburt zählt nicht, du Pappnase)",
             "frequency": 1
         },
         "karte7": {
             "headline": "Zeit zählen",
-            "task": "ein anderer Spieler benutzt eine\nStoppuhr. Du musst 30s im Kopf zählen und\ndann Stopp sagen, wenn du näher als 2 Sekunden\nan der gestoppten Zeit bist, verteile 5\nSchlücke, wenn nicht trinke 1 Schluck",
+            "task": "ein anderer Spieler benutzt eine\nStoppuhr. Du musst 30s im Kopf zählen und\ndann Stopp sagen, wenn du näher als\n2 Sekunden an der gestoppten Zeit bist,\nverteile 5 Schlücke, wenn nicht trinke 1 Schluck",
             "frequency": 1
         },
-        "karte8": {
+        "karte8": { #kategorie
             "headline": "Sprichwörter",
             "task": "fängt an. Sagt nacheinander Sprichwörter\nauf, der Verlierer trinkt 2 Schlücke,",
             "frequency": 1
         },
         "karte9": {
             "headline": "Glückspilz",
-            "task": "Das Glück ist mit den Dummen, verteile\n4 Schlücke",
+            "task": "das Glück ist mit den Dummen, verteile\n4 Schlücke",
             "frequency": 1
         },
         "karte10": {
@@ -582,7 +584,7 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
         },
         "karte14": {
             "headline": "coole Leute",
-            "task": ", für jeden Spieler, den du kürzer als\neinen Monat kennst trinkst du 1 Schluck",
+            "task": "für jeden Spieler, den du kürzer als\neinen Monat kennst trinkst du 1 Schluck",
             "frequency": 1
         },
         "karte15": {
@@ -592,7 +594,7 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
         },
         "karte16": {
             "headline": "Plätzetausch",
-            "task": "Tausche mit deinem Spieler deiner Wahl\ndie Plätze trinke auf den besseren Platz\nein Schluck",
+            "task": "tausche mit deinem Spieler deiner Wahl\ndie Plätze trinke auf den besseren Platz\nein Schluck",
             "frequency": 1
         },
                     #         1         2         3         4
@@ -601,26 +603,28 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
             "task": "finde bis zu 5 Reime auf -Drucker-. Für\njeden Reim verteile ein Schluck",
             "frequency": 1
         },
+                    #         1         2         3         4#         1         2         3         4#         1         2         3         4
         "karte18": {
             "headline": "Pantomime",
-            "task": "stelle ein ausgedachtes Wort pantomimisches\nda, trinke 5 Schlucke wenn es keiner\nerrät, der errater verteilt 2 Schlucke",
-            "frequency": 1
+            "task": "stelle ein ausgedachtes Wort\npantomimisches da, trinke 5 Schlucke\nwenn es keiner errät, der Errater\nverteilt 2 Schlucke",
+            "frequency": 3
         },
         "karte19": {
             "headline": "Happy Birthday",
-            "task": "sage die Geburtstage von den Mitspielernauf,\nverteile für jeden richtigen\nein Schluck",
+            "task": "sage die Geburtstage von den\nMitspielernauf, verteile für jeden\nrichtigen ein Schluck",
             "frequency": 1
         },
         "karte20": {
             "headline": "Astrologie",
-            "task": "Trinke nach deinem Chinesisches Sternzeichen"
-                    "\n Schwein: Geburtsjahr = 1995 Schlücke = 1"
-                    "\n Ratte: Geburtsjahr = 1996 Schlücke = 2"
-                    "\n Büffel: Geburtsjahr = 1997 Schlücke = 1"
-                    "\n Tiger: Geburtsjahr = 1998 Schlücke = 3"
-                    "\n Hase: Geburtsjahr = 1999 Schlücke = 2"
-                    "\n Drache: Geburtsjahr = 2000 Schlücke = 4"
-                    "\n Schlange: Geburtsjahr = 2001 Schlücke = 1",
+            "task": "\n"
+                    "Dein Chinesisches Sternzeichen"
+                    "\nSchwein: Geburtsjahr = 1995 Schlücke = 1"
+                    "\nRatte: Geburtsjahr = 1996 Schlücke = 2"
+                    "\nBüffel: Geburtsjahr = 1997 Schlücke = 1"
+                    "\nTiger: Geburtsjahr = 1998 Schlücke = 3"
+                    "\nHase: Geburtsjahr = 1999 Schlücke = 2"
+                    "\nDrache: Geburtsjahr = 2000 Schlücke = 4"
+                    "\nSchlange: Geburtsjahr = 2001 Schlücke = 1",
             "frequency": 1
         },
         "karte21": {
@@ -666,7 +670,7 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
         },
         "karte29": {
             "headline": "Land",
-            "task": "zähle ein Land auf, wenn nur du in diesem\nLand warst, verteile 4 Schlücke",
+            "task": "zähle ein Land auf, wenn nur du in\ndiesem Land warst, verteile 4 Schlücke",
             "frequency": 1
         },
         "karte30": {
@@ -674,11 +678,11 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
             "task": "verteile für jeden E-mail account, den\ndu hast 1 Schluck",
             "frequency": 1
         },
-        "karte31": {
-            "headline": "Beste Leben",
-            "task": "erzähle eins deiner besten Ereignisse\nin deinem Leben. Trinke drauf 2 Schlücke",
-            "frequency": 1
-        },
+        #"karte31": {
+        #    "headline": "Beste Leben",
+        #    "task": "erzähle eins deiner besten Ereignisse\nin deinem Leben. Trinke drauf 2 Schlücke",
+        #    "frequency": 1
+        #},
         "karte32": {
             "headline": "Stolz wie Bolle",
             "task": "erzähle wann du das letzte mal Stolz\nwarst, verteile dafür 2 Schlücke",
@@ -704,28 +708,41 @@ class dict(): #mehr karten haben als Spielrunden möglich !!!!!
             "task": "zeige einen deiner Dancemoves oder\ntrinke 2 Schlücke",
             "frequency": 1
         },
+        ###Kategorien
+        "karte37": {
+            "headline": "Bäume",
+            "task": "beginnt. Sagt nacheinander Baumarten\nauf. Bei Wiederholung oder falschen trinkt\nder Verlierer  2 Schlücke,",
+            "frequency": 1
+        },
+        "karte38": {
+            "headline": "Cocktails",
+            "task": "beginnt. Sagt nacheinander Cocktailnamen\nauf. Bei Wiederholung oder falschen\ntrinkt der Verlierer  2 Schlücke,",
+            "frequency": 1
+        },
     }
 
     Speicherfuralle = {
-                 #         1         2         3         4#         1         2         3         4#         1         2         3         4
+                    #         1         2         3         4#         1         2         3         4#         1         2         3         4
         "karte1": {
             "headline": "Zahlen",
-            "task": "alle sagen einen zahl",
+            "task": "Alle sagen einen zahl zwischen 1 und 100\ndie, die am Durchschnitt der Zahlen am\nnahsten und am weitesten entfernt ist\ntrinkt 2 Schlückte",
             "frequency": 1
         },
+        ### Abstimmung
         "karte2": {
             "headline": "Abstimmung",
             "task": "Wer ist der netteste Spieler\nder Runde, zeigt auf 3 auf den Spieler,\njeder Spieler trinkt so viele Schlücke,\nwie Finger auf ihn zeigen",
             "frequency": 1
         },
+        # daumenspiele
         "karte3": {
             "headline": "Daumenspiel",
-            "task": "lieber Ananas oder Mais auf Pizza,\njeder Spieler zeigt auf 3 mit seinem\nDaumen nach unten oder hoben, die Verlierer\ntrinken 1 Schluck, bei Gleichstand\ntrinken alle einen",
+            "task": "Lieber Ananas oder Mais auf Pizza,\njeder Spieler zeigt auf 3 mit seinem\nDaumen nach unten oder hoben, die\nVerlierer trinken 1 Schluck, bei\nGleichstand trinken alle einen",
             "frequency": 1
         },
         "karte4": {
             "headline": "Opfer",
-            "task": "entscheidet, wer das Opfer\nder Runde ist, es trinkt 3 Schlücke.\nWenn niemand gewählt wird,trinken alle 5 Schlücke",
+            "task": "Entscheidet, wer das Opfer\nder Runde ist, es trinkt 3 Schlücke.\nWenn niemand gewählt wird,trinken\nalle 5 Schlücke",
             "frequency": 1
         },
     }
