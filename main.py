@@ -17,7 +17,7 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.uix.popup import Popup
 from random import randint, random, choice
 from kivy.core.window import Window
-Window.size = (360, 640) #nur für die auflösung jetzt
+#Window.size = (360, 640) #nur für die auflösung jetzt
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
