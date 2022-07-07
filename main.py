@@ -12,281 +12,39 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.textinput import TextInput
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.storage.jsonstore import JsonStore
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, NoTransition
+#from kivy.storage.jsonstore import JsonStore
 from kivy.uix.popup import Popup
 from random import randint, random, choice
-#from kivy.core.window import Window
-#Window.size = (360, 640) #nur für die auflösung jetzt
+from kivy.core.window import Window
+#Window.size = (360, 640) #nur für die auflösung jetzt ##rausnehmen beim hochladen
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.list import OneLineAvatarIconListItem, ILeftBodyTouch, CheckboxRightWidget
 from kivymd.uix.button import MDFlatButton,MDTextButton,MDIconButton,MDRaisedButton,MDFillRoundFlatButton
+from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.chip import MDChip
-#from kivy.core.window import Window
+from kivy.core.window import Window
 
 #kv = Builder.load_file("Spiel.kv")
 kvtext='''
-<ItemConfirm>
-    on_release: root.set_icon(check)
 
-    CheckboxLeftWidget:
-        id: check
-        #group: "check"
-        #active: True
-
-
-
-<Content>
-    orientation: "vertical"
-    #spacing: 20
-    size_hint_y: None
-    height: 20  ####################### potentieller fehler
-
-    MDTextField:
-        id: content_text
-        hint_text: "Name"
-
-
-
-<MainWindow>:
-    name: "main"
-    canvas.before:
-        Color:
-            rgba: (0.4,0.1,0.7,1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    #Image:
-    #    source: 'Grille.png'
-    #    size: self.texture_size
-
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        MDFillRoundFlatButton:
-            text: "Spielen"
-            md_bg_color: (116/255,216/255,140/255,1)
-            on_release: root.Spiel_start()
-            #on_release: root.open_popup_spiel()
-            pos_hint: {"x": 0.3,"y": 0.}
-            size_hint: (0.4,0.2)
-            font_size: self.width/5
-
-
-        Label: #Spieler
-            id: Label_main_spieler
-            text:"Spieler"
-            font_size: self.width/10
-            pos_hint: {"x": 0.,"y": 0.3}
-                        #size_hint: (0.2,0.1)
-                        #color: 1, 1, 0, 1
-
-
-        ##muss noch geändert weerden
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            pos_hint: {"x": 0.25,"y": 0.4}
-            size_hint: (0.6,0.3)
-            BoxLayout:
-            #ScatterLayout:
-            #GridLayout
-                orientation: 'vertical'
-                #pos_hint: {"x": 0.3,"y": 0.5}
-                #size_hint: (1,0.2)
-                size_hint_y: None
-                #height: 20
-                height: self.minimum_height
-                id: Box_main_spieler_name
-                spacing:40
-                padding: 30
-
-        MDRectangleFlatButton:
-            text: "Karten"
-            text_color: (116/255,216/255,140/255,1)
-            line_color: (116/255,216/255,140/255,1)
-            pos_hint: {"x": 0.35,"y": 0.3}
-            size_hint: (0.3,0.05)
-            on_release: root.show_alert_dialog()
-
-
-
-
-        ##Spieler eintragen
-        #Button:
-        MDFillRoundFlatButton:
-            text:"hinzufügen"
-            md_bg_color: (116/255,216/255,140/255,1)
-            pos_hint: {"x": 0.7,"y": 0.75}
-            size_hint: (0.2,0.1)
-            font_size: self.width/8
-            on_release: root.show_Spielerhinzu_dialog()
-            #on_release: root.open_Spieler_hinzu()
-
-
-<Spielerhizu>
-    auto_dismiss: False
-    title: "Einstellungen"
-    size_hint: 0.6, 0.4
-    pos_hint: {"x": 0.2, "top":0.9}
-    BoxLayout:
-        orientation: 'vertical'
-        BoxLayout:
-            #Label:
-            MDLabel:
-                text:"Spielername eingeben"
-                font_size: self.width/12
-                size_hint: (0.8,1)
-
-            Button:
-                text: "close"
-                size_hint: (0.2,1)
-                font_size: self.width/8
-                on_release:
-                    root.dismiss()
-
-        TextInput:
-            id: input_box_main
-            multiline:False
-            #font_size: self.width/8
-            #pos_hint: {"x": 0.8,"y": 0.5}
-            #size_hint: (0.2,0.2)
-
-        Button:
-            text: "hinzufügen"
-            #size_hint: (0.2,0.2)
-            font_size: self.width/10
-            on_release:
-                root.hinzufugen()
-            on_release:
-                root.dismiss()
-
-
-
-<popupspiel>
-    auto_dismiss: False
-    title: "Einstellungen"
-    size_hint: 0.6, 0.2
-    pos_hint: {"x": 0.2, "top":0.9}
-    BoxLayout:
-        Button:
-            text: "close"
-            font_size: self.width/8
-            on_release:
-                root.dismiss()
-
-        Button:
-            text: "Neustart"
-            font_size: self.width/8
-            on_release:
-                root.Spielen()
-
-
-
-<Zwischen_Karte>:
-    name: "Zwischen_Karte"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        MDFillRoundFlatButton:
-            text: "Weiter"
-            on_release: root.weiter()
-            on_release: root.Spielaufbau()
-            pos_hint: {"x": 0.3,"y": 0.}
-            size_hint: (0.4,0.2)
-            font_size: self.width/8
-
-        MDLabel:
-            id: Zwischen
-            text:"Viel Spaß"
-            size_hint: (0.3,0.2)
-            pos_hint: {"x": 0.4,"y": 0.8}
-            font_size: self.width/5
-            #color: 1, 1, 0, 1
-
-        MDLabel:
-            text:"...."
-            size_hint: (0.3,0.2)
-            pos_hint: {"x": 0.4,"y": 0.6}
-            font_size: self.width/7
-            #color: 1, 1, 0, 1
-
-
-<Spiel_typ01>:
-    name: "Spiel_typ01"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        MDFillRoundFlatButton:
-            text: "Weiter"
-            on_release: root.test()
-            pos_hint: {"x": 0.3,"y": 0.}
-            size_hint: (0.4,0.2)
-            font_size: self.width/8
-
-        MDLabel:
-            id: Aufgabe_name
-            text:"Aufgabe"
-            size_hint: (0.3,0.1)
-            pos_hint: {"x": 0.4,"y": 0.85}
-            #color: 1, 1, 0, 1
-            font_size: self.width/5
-
-        MDLabel:
-            id: Aufgabe_text
-            text:"Spieler ... mache das und das, sonst trinke zwei schlücke"
-            size_hint: (0.4,0.4)
-            pos_hint: {"x": 0.2,"y": 0.3}
-            #color: 1, 1, 0, 1
-            font_size: self.width/8
-        MDLabel:
-            id: Spieler_name
-            text:""
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.7}
-            #color: 1, 1, 0, 1
-            font_size: self.width/4
-
-
-<Spiel_beenden>:
-    name: "Spiel_beenden"
-    FloatLayout:
-        size: root.width, root.height
-        orientation: 'vertical'
-
-        MDFillRoundFlatButton:
-            text: "Neustart"
-            on_release: root.neustart()
-            pos_hint: {"x": 0.3,"y": 0.}
-            size_hint: (0.4,0.2)
-            font_size: self.width/8
-
-        MDLabel:
-            id: Spiel_ende
-            text:"Spiel beendet"
-            size_hint: (0.2,0.1)
-            pos_hint: {"x": 0.4,"y": 0.65}
-            #color: 1, 1, 0, 1
-            font_size: self.width/3
 '''
 
 class ItemConfirm(OneLineAvatarIconListItem):
     divider = None
-
     def set_icon(self, instance_check):
+        print("seticon ausgelöst")
         instance_check.active = True
-        check_list = instance_check.get_widgets(instance_check.group)
-        for check in check_list:
-            if check != instance_check:
-                check.active = False
+        #check_list = instance_check.get_widgets(instance_check.group)
+        #for check in check_list:
+        #    if check != instance_check:
+        #        check.active = False
 
 
-
+#class CheckboxLeftWidget(ILeftBodyTouch, MDCheckbox):
+ #   '''Custom right container.'''
 
 
 class Content(BoxLayout):
@@ -300,16 +58,17 @@ class MainWindow(Screen):
     selected_project = StringProperty()
     def __init__(self,**kwargs):
         super(MainWindow,self).__init__(**kwargs)
+        #self.dialog = None
         ## um Vars zu erstellen
-        #self.show_alert_dialog()
-        #self.dialog.dismiss()
+
+
         self.erstesItem = ItemConfirm(text="Basic")
         self.erstesItem.ids.check.active = True
         self.erstesItem.ids.check.disabled = True
         self.zweitesItem = ItemConfirm(text="Kategorien")
         self.drittesItem = ItemConfirm(text="Abstimmungen")
         self.viertesItem = ItemConfirm(text="Daumenspiel")
-        self.funftesItem = ItemConfirm(text="widw und ihnn")
+        self.funftesItem = ItemConfirm(text="Widw und ihnn")
         self.sechstesItem = ItemConfirm(text="Aktivitäten")
 
 
@@ -388,14 +147,6 @@ class MainWindow(Screen):
         #spielernoch aus liste Löschen
 
 
-    def open_Spieler_hinzu(self): #Popup für einstellungen
-        pops = Spielerhizu()
-        pops.open()
-
-    def open_popup_spiel(self): #Popup für einstellungen
-        pops = popupspiel()
-        pops.open()
-
     def show_alert_dialog(self):  ####man kann nur eins anklicken, muss angeklickt werdenoder ähnliches
         #self.erstesItem = ItemConfirm(text="Basic")
         #self.erstesItem.ids.check.active = True
@@ -413,10 +164,19 @@ class MainWindow(Screen):
                     self.funftesItem,
                     self.sechstesItem,
                     #ItemConfirm(text="Basic"),
-                    #ItemConfirm(text="erweiterung")
+                    #ItemConfirm(text="Erweiterung"),
 
                 ],
+                buttons=[
+                    MDFlatButton(
+                        text="OK",
+                        theme_text_color="Custom",
+                        #on_release=self.close_Dialog,
+                    )
+                ],
             )
+        self.dialog.size_hint_x = 1
+        self.dialog.size_hint_y = 0.65
         self.dialog.open()
         #print(erstesItem.divider)
         #print(self.erstesItem.ids.check.active)#######
@@ -443,6 +203,7 @@ class MainWindow(Screen):
                     ),
                 ],
             )
+        self.dialog1.size_hint_x = 1
         self.dialog1.open()
 
     def close_Dialog(self, obj):
@@ -452,34 +213,15 @@ class MainWindow(Screen):
 
     def pruf(self, obj):
         print("prüf")
-        self.Name = self.dialog1.content_cls.ids.content_text.text
-        self.dialog1.content_cls.ids.content_text.text = ''
-        print(len(self.Name))
-        self.Name = self.Name[:10]
-        print(self.dialog1.content_cls.ids.content_text.text)
-        self.Spieler_hinzu(self.Name)
+        if self.dialog1.content_cls.ids.content_text.text != '':
+            self.Name = self.dialog1.content_cls.ids.content_text.text
+            self.dialog1.content_cls.ids.content_text.text = ''
+            print(len(self.Name))
+            self.Name = self.Name[:10]
+            print(self.dialog1.content_cls.ids.content_text.text)
+            self.Spieler_hinzu(self.Name)
         self.dialog1.dismiss()
         #print(text)
-
-
-#Popups können entfernt werden
-
-class popupspiel(Popup):
-    pass
-
-class Spielerhizu(Popup):
-    def __init__(self,**kwargs):
-        super(Spielerhizu,self).__init__(**kwargs)
-
-    def hinzufugen(self):
-        self.Spielername = self.ids.input_box_main.text
-        if self.ids.input_box_main.text != '':
-            self.ids.input_box_main.text = ''
-            print("hinzu")
-            #mainscreen.Spieler_hinzu(self.Spielername)
-            #self.parent.Spieler_hinzu(self.Spielername)
-            Mainclass.mainscreen.Spieler_hinzu(self.Spielername)
-            #MainWindow.Spieler_hinzu(self,self.Spielername)
 
 
 
@@ -984,11 +726,11 @@ class MainApp(MDApp):
         super(MainApp,self).__init__(**kwargs)
 
     def build(self):
-        #kv = Builder.load_file("Spiel.kv")
-        kv = Builder.load_string(kvtext)
+        kv = Builder.load_file("Spiel.kv")
+        #kv = Builder.load_string(kvtext)
         #self.theme_cls.theme_style = "Dark"
 
-        ms = ScreenManager()
+        ms = ScreenManager(transition=NoTransition())
         self.mainscreen = MainWindow(name="main")
         self.zwischenscreen = Zwischen_Karte()
         self.spielscreen = Spiel_typ01()
@@ -1004,6 +746,5 @@ if __name__ == '__main__':
     #MainApp().run()
     Mainclass = MainApp()
     Mainclass.run()
-
 
 
