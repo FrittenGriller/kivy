@@ -1,0 +1,435 @@
+<ItemConfirm>
+    on_release: root.set_icon(check)
+
+    #CheckboxLeftWidget:
+    CheckboxRightWidget:
+        id: check
+        #size: self.size
+        #adaptive_width: True
+        #size: root.width, root.height
+        #group: "check"
+        #active: True
+
+
+
+<Content>
+    orientation: "vertical"
+    #spacing: 20
+    size_hint_y: None
+    height: 20  ####################### potentieller fehler
+
+    MDTextField:
+        id: content_text
+        hint_text: "Name"
+
+<Info>
+    orientation: "vertical"
+    #spacing: 20
+    size_hint_y: None
+    height: 30  ####################### potentieller fehler
+    MDLabel:
+        text: "\n\nDies ist das geniale Trinkspiel der Grille. \nRegel: betrinkt euch\nAlkoholtipps: Bier, Cola-Korn, Vodka-Wasser mit Limette\n\n"
+
+<Fehler>
+    orientation: "vertical"
+    #spacing: 20
+    size_hint_y: None
+    height: 30  ####################### potentieller fehler
+    MDLabel:
+        text: "\n\nBitte füge Spielernamen hinzu!\n\n"
+
+
+
+
+<MainWindow>:
+    name: "main"
+    canvas.before:
+        Color:
+            rgba: (0.4,0.1,0.7,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    #Bilder
+    Image: #rechts unten
+        source: 'bierneu1.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.55,"y": 0.09}
+        size: self.texture_size
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: 20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #rechtsoben
+        source: 'Grilleneu.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.6,"y": 0.6}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksoben
+        source: 'bierneu3.png'
+        size_hint: (0.2,0.2)
+        pos_hint: {"x": 0.,"y": 0.55}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksunten
+        source: 'bierneu4.png'
+        size_hint: (0.25,0.25)
+        pos_hint: {"x": 0.2,"y": 0.1}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+
+
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        MDRaisedButton:
+            text:"i"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.infotext()
+            pos_hint: {"x": 0.9,"y": 0.95}
+            size_hint: (0.1,0.05)
+            font_size: self.width/4
+
+        MDLabel: #überschrift
+            text:"Grille's Trinkspiel"
+            font_size: self.width/10
+            pos_hint: {"x": 0.1,"y": 0.4}
+
+        MDFillRoundFlatButton:
+            text: "Spielen"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.Spiel_start()
+            #on_release: root.open_popup_spiel()
+            pos_hint: {"x": 0.3,"y": 0.}
+            size_hint: (0.4,0.2)
+            font_size: self.width/6
+
+
+        MDLabel: #Spieler
+            id: Label_main_spieler
+            text:"Spieler"
+            font_size: self.width/12
+            pos_hint: {"x": 0.4,"y": 0.3}
+                        #size_hint: (0.2,0.1)
+                        #color: 1, 1, 0, 1
+
+
+        ##muss noch geändert weerden
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            pos_hint: {"x": 0.25,"y": 0.4}
+            size_hint: (0.6,0.3)
+            BoxLayout:
+            #ScatterLayout:
+            #GridLayout
+                orientation: 'vertical'
+                #pos_hint: {"x": 0.3,"y": 0.5}
+                #size_hint: (1,0.2)
+                size_hint_y: None
+                #height: 20
+                height: self.minimum_height
+                id: Box_main_spieler_name
+                spacing:40
+                padding: 30
+
+        MDRectangleFlatButton:
+            text: "Karten"
+            text_color: (116/255,216/255,140/255,1)
+            line_color: (116/255,216/255,140/255,1)
+            pos_hint: {"x": 0.35,"y": 0.3}
+            size_hint: (0.3,0.05)
+            on_release: root.show_alert_dialog()
+
+
+
+
+        ##Spieler eintragen
+        #Button:
+        MDFillRoundFlatButton:
+            text:"hinzufügen"
+            md_bg_color: (116/255,216/255,140/255,1)
+            pos_hint: {"x": 0.7,"y": 0.75}
+            size_hint: (0.2,0.1)
+            font_size: self.width/7
+            on_release: root.show_Spielerhinzu_dialog()
+            #on_release: root.open_Spieler_hinzu()
+
+
+
+<Zwischen_Karte>:
+    name: "Zwischen_Karte"
+    canvas.before:
+        Color:
+            rgba: (0.4,0.1,0.7,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    #Bilder
+    Image: #rechts unten
+        source: 'bierneu1.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.55,"y": 0.08}
+        size: self.texture_size
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: 20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #rechtsoben
+        source: 'Grilleneu.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.6,"y": 0.6}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksoben
+        source: 'bierneu3.png'
+        size_hint: (0.2,0.2)
+        pos_hint: {"x": 0.,"y": 0.55}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksunten
+        source: 'bierneu4.png'
+        size_hint: (0.25,0.25)
+        pos_hint: {"x": 0.2,"y": 0.1}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        MDFillRoundFlatButton:
+            text: "Weiter"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.weiter()
+            on_release: root.Spielaufbau()
+            pos_hint: {"x": 0.3,"y": 0.}
+            size_hint: (0.4,0.2)
+            font_size: self.width/8
+
+        MDLabel:
+            id: Zwischen
+            markup: True
+            text:"Viel Spaß"
+            size_hint: (0.3,0.2)
+            pos_hint: {"x": 0.4,"y": 0.8}
+            font_size: self.width/5
+            #color: 1, 1, 0, 1
+
+        MDLabel:
+            text:""
+            size_hint: (0.3,0.2)
+            pos_hint: {"x": 0.4,"y": 0.6}
+            font_size: self.width/7
+            #color: 1, 1, 0, 1
+
+
+<Spiel_typ01>:
+    name: "Spiel_typ01"
+    canvas.before:
+        Color:
+            rgba: (0.4,0.1,0.7,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    #Bilder
+    Image: #rechts unten
+        source: 'bierneu1.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.55,"y": 0.08}
+        size: self.texture_size
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: 20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #rechtsoben
+        source: 'Grilleneu.png'
+        size_hint: (0.3,0.3)
+        pos_hint: {"x": 0.55,"y": 0.65}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksoben
+        source: 'bierneu3.png'
+        size_hint: (0.2,0.2)
+        pos_hint: {"x": -0.1,"y": 0.55}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+    Image: #linksunten
+        source: 'bierneu4.png'
+        size_hint: (0.25,0.25)
+        pos_hint: {"x": 0.2,"y": 0.1}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: -20
+                origin: root.center
+        canvas.after:
+            PopMatrix
+
+
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        MDRaisedButton:
+            text:"i"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.infotext3()
+            pos_hint: {"x": 0.9,"y": 0.95}
+            size_hint: (0.1,0.05)
+            font_size: self.width/4
+
+        MDFillRoundFlatButton:
+            text: "Weiter"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.test()
+            pos_hint: {"x": 0.3,"y": 0.}
+            size_hint: (0.4,0.2)
+            font_size: self.width/8
+
+        MDLabel:
+            id: Aufgabe_name
+            text:"Aufgabe"
+            markup: True
+            size_hint: (0.6,0.1)
+            pos_hint: {"x": 0.2,"y": 0.85}
+            #color: 1, 1, 0, 1
+            font_size: self.width/6
+            halign: "center"
+            valign: "top"
+
+        MDLabel:
+            markup: True
+            id: Aufgabe_text
+            text:"Spieler ... mache das und das, sonst trinke zwei schlücke"
+            size_hint: (0.64,0.4)
+            pos_hint: {"x": 0.18,"y": 0.3}
+            #color: 1, 1, 0, 1
+            font_size: self.width/10
+            halign: "center"
+            valign: "top"
+
+        MDLabel:
+            id: Spieler_name
+            markup: True
+            text:""
+            size_hint: (0.5,0.1)
+            pos_hint: {"x": 0.25,"y": 0.7}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+            halign: "center"
+            valign: "top"
+
+
+<Spiel_beenden>:
+    name: "Spiel_beenden"
+    canvas.before:
+        Color:
+            rgba: (0.4,0.1,0.7,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    FloatLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        MDFillRoundFlatButton:
+            text: "Neustart"
+            md_bg_color: (116/255,216/255,140/255,1)
+            on_release: root.neustart()
+            pos_hint: {"x": 0.3,"y": 0.}
+            size_hint: (0.4,0.2)
+            font_size: self.width/8
+
+        MDLabel:
+            id: Spiel_ende
+            text:"Spiel beendet"
+            size_hint: (0.45,0.1)
+            pos_hint: {"x": 0.275,"y": 0.65}
+            #color: 1, 1, 0, 1
+            font_size: self.width/5
+            halign: "center"
+
+
+        MDLabel:
+            text:"Danke fürs Spielen"
+            size_hint: (0.5,0.1)
+            pos_hint: {"x": 0.25,"y": 0.35}
+            #color: 1, 1, 0, 1
+            font_size: self.width/8
+            halign: "center"
