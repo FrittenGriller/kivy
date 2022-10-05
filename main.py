@@ -13,7 +13,7 @@ from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.textinput import TextInput
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, NoTransition
-from kivy.storage.jsonstore import JsonStore
+#from kivy.storage.jsonstore import JsonStore
 from kivy.uix.popup import Popup
 from random import randint, random, choice
 from kivy.core.window import Window
